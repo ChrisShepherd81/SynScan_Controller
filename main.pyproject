@@ -1,0 +1,3 @@
+{
+    "files": ["SlewButton.qml","view.qml","ViewModel.py","SpacerItem.qml","main.py","SynScanProtocol.py"]
+}
