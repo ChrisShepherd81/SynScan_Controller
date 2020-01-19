@@ -10,5 +10,4 @@ class TestController:
         pass
 
     def slew_fixed(axisId, speed):
-        print("Slew axis " + str(axisId) + " with speed " + str(speed))
-
+        pass

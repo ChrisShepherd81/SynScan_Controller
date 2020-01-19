@@ -7,9 +7,22 @@ Button {
         viewModel.on_slewStop()
     }
 
+    MouseArea {
+       id: buttonMouseId
+       anchors.fill: parent
+    }
+
     background: Rectangle {
            implicitWidth: 50
            implicitHeight: 50
-           color: "#00ffff"
+           color: buttonMouseId.pressed ? "lightgray" : "gray"
+           border.color: "darkgray"
+           border.width: 1
+           radius: 4
+    }
+
+    font {
+        pixelSize: 22
+        bold: true
     }
 }

@@ -1,6 +1,6 @@
 import sys
 from PySide2.QtWidgets import QApplication
-from PySide2.QtCore import Qt, QCoreApplication
+from PySide2.QtCore import Qt, QCoreApplication, qDebug
 from PySide2.QtQml import QQmlApplicationEngine
 
 from ViewModel import ViewModel
