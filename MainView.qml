@@ -19,6 +19,10 @@ ApplicationWindow {
             CustomButton {
                 button_height: comPortSelectId.height
                 text: qsTr("Connect")
+                onClicked: {
+                    console.log("Connect button clicked")
+                    viewModel.connect(comPortSelectId.currentText)
+                }
             }
         }
 
@@ -62,8 +66,17 @@ ApplicationWindow {
             SpacerItem {}
         }
 
-        TextField {
-            width: 500
+        RowLayout {
+            Label {
+                text: "Location:"
+            }
+
+            Text {
+                id: positionId
+                text: viewModel.location
+            }
+        }
+        TextArea {
             placeholderText: qsTr("No device connected")
         }
     }

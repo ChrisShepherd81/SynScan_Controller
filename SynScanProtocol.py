@@ -73,10 +73,13 @@ class AxisId(Enum):
 
 class SynScanController:
 
-    def __init__(self, device):
-        if isinstance(device, str):
+    def __init__(self):
+        self._device = None
+
+    def connect(self, port):
+        if isinstance(port, str):
             device = serial.Serial(
-                    port             = device,
+                    port             = port,
                     baudrate         = 9600,
                     bytesize         = serial.EIGHTBITS,
                     parity           = serial.PARITY_NONE,
@@ -88,8 +91,9 @@ class SynScanController:
                     dsrdtr           = False,
                     interCharTimeout = None
                 )
-
-        self._device = device
+            self._device = device
+        else:
+            raise UsageError("")
 
     @property
     def device(self):

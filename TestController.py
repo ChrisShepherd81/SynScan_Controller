@@ -11,3 +11,6 @@ class TestController:
 
     def slew_fixed(axisId, speed):
         pass
+
+    def connect(self, port):
+        pass
