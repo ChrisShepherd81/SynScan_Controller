@@ -9,8 +9,6 @@ class ViewModel(QObject):
     def __init__(self, controller, parent=None):
         super(ViewModel, self).__init__(parent)
         self._controller = controller
-        self._location = "unknown"
-        self._position = "unknown"
         self._connected = False
         self._positionUpdaterThread = None
 
@@ -19,7 +17,7 @@ class ViewModel(QObject):
         if self._connected:
             latitude, longitude = self._controller.getLocation()
             return str(latitude) + ',' + str(longitude)
-        return self._location
+        return "disconnected"
 
     def updateLocation(self):
         self.locationChanged.emit()
@@ -31,7 +29,7 @@ class ViewModel(QObject):
         if self._connected:
             ra, dec = self._controller.getPosition()
             return "RA: " + str(ra) + ", DEC: " + str(dec)
-        return self._position
+        return "disconnected"
 
     def updatePosition(self):
         self.positionChanged.emit()
@@ -48,7 +46,6 @@ class ViewModel(QObject):
         self._controller.connect(port)
         self._connected = True
         self.updateLocation()
-        #self.updatePosition()
         self._positionUpdaterThread = threading.Thread(target=self.positionUpdater)
         self._positionUpdaterThread.start()
 
