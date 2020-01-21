@@ -7,6 +7,7 @@ CustomButton {
    button_width: 50
 
     onReleased: {
+        console.log("SlewButton.onReleased")
         viewModel.on_slewStop()
     }
 

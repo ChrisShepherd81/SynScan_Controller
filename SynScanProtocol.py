@@ -156,7 +156,7 @@ class SynScanController:
 
     # Public API starts here
 
-    def getPosition(self, coordinateMode = CoordinateMode.AZM_ALT, highPrecisionFlag = True):
+    def getPosition(self, coordinateMode = CoordinateMode.RA_DEC, highPrecisionFlag = True):
 
         if highPrecisionFlag:
             command = Command.GET_POSITION_AZM_ALT_PRECISE if (coordinateMode == CoordinateMode.AZM_ALT) else Command.GET_POSITION_RA_DEC_PRECISE
@@ -380,12 +380,14 @@ class SynScanController:
         return response
 
 
+
     def getModel(self):
         request = Command.GET_MODEL
         self._write(request)
         response = self._read_binary(expected_response_length = 1 + 1, check_and_remove_trailing_hash = True)
         response = response[0]
         return response
+
 
 
     def echo(self, c):
