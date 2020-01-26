@@ -41,13 +41,33 @@ class ViewModel(QObject):
             self.updatePosition()
             time.sleep(1)
 
+    connectionStateChanged = Signal()
     @Slot(str)
     def connect(self, port):
-        self._controller.connect(port)
-        self._connected = True
+        if not self._connected:
+            self._controller.connect(port)
+            self._connected = True
+            self.connectionStateChanged.emit()
+
         self.updateLocation()
-        self._positionUpdaterThread = threading.Thread(target=self.positionUpdater)
-        self._positionUpdaterThread.start()
+        self.updatePosition()
+        #self._positionUpdaterThread = threading.Thread(target=self.positionUpdater)
+        #self._positionUpdaterThread.start()
+
+    def getConnectionState(self):
+        return self._connected
+
+    connected = Property(bool, getConnectionState, notify = connectionStateChanged)
+
+    @Slot()
+    def disconnect(self):
+        if self._connected:
+            self._controller.close()
+            self._connected = False
+            self.connectionStateChanged.emit()
+        self.updateLocation()
+        self.updatePosition()
+
 
     @Slot()
     def on_slewStop(self):

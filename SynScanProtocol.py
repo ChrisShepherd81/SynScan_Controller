@@ -100,7 +100,8 @@ class SynScanController:
         return self._device
 
     def close(self):
-        return self._device.close()
+        if self._device != None:
+            return self._device.close()
 
     def _write_binary(self, request):
         return self._device.write(request)
@@ -156,7 +157,7 @@ class SynScanController:
 
     # Public API starts here
 
-    def getPosition(self, coordinateMode = CoordinateMode.RA_DEC, highPrecisionFlag = True):
+    def getPosition(self, coordinateMode = CoordinateMode.RA_DEC, highPrecisionFlag = False):
 
         if highPrecisionFlag:
             command = Command.GET_POSITION_AZM_ALT_PRECISE if (coordinateMode == CoordinateMode.AZM_ALT) else Command.GET_POSITION_RA_DEC_PRECISE

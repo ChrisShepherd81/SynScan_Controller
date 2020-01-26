@@ -3,10 +3,12 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.14
 
 ApplicationWindow {
+    id: root
     title: qsTr("SynScan Controller")
     visible: true
-    width: 640
-    height: 480
+
+    height: contentItem.childrenRect.height
+    width: contentItem.childrenRect.width
 
     ColumnLayout {
         RowLayout {
@@ -18,23 +20,17 @@ ApplicationWindow {
 
             CustomButton {
                 button_height: comPortSelectId.height
-                text: qsTr("Connect")
+                text: viewModel.connected ? qsTr("Disconnect") : qsTr("Connect")
                 onClicked: {
-                    viewModel.connect(comPortSelectId.currentText)
+                    if(!viewModel.connected)
+                        viewModel.connect(comPortSelectId.currentText);
+                    else
+                        viewModel.disconnect();
                 }
-            }
-
-            ComboBox {
-                implicitWidth: 100
-                width: 50
-                id: speed
-                currentIndex: 4
-                model: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
             }
         }
 
         GridLayout {
-            property int speed: 9
             rows: 3
             columns: 3
 
@@ -43,8 +39,7 @@ ApplicationWindow {
             SlewButton {
                 id: upArrowButton
                 text: "↑"
-                onPressed: {console.log("SlewButton.upArrowButton.onPressed")
-                    viewModel.on_slewUpButton(speed.currentIndex+1) }
+                onPressed: {viewModel.on_slewUpButton(speed.currentIndex+1) }
             }
 
             SpacerItem {}
@@ -72,6 +67,17 @@ ApplicationWindow {
             }
 
             SpacerItem {}
+        }
+
+        RowLayout {
+            Label { text: "Speed:" }
+            ComboBox {
+                implicitWidth: 100
+                width: 50
+                id: speed
+                currentIndex: 4
+                model: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            }
         }
 
         RowLayout {
